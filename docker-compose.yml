@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  tool-runner:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      network: host
+    environment:
+      USER_PROMPT: "Give me an overview of Microsoft's AI offerings on Azure."
+      ENABLE_THINKING: "true"

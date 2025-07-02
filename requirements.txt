@@ -1,0 +1,4 @@
+qwen-agent
+python-dateutil
+python-dotenv
+mcp
