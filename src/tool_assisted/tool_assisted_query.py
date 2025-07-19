@@ -1,5 +1,7 @@
 import os
 import json
+import re
+import logging
 from qwen_agent.agents import Assistant
 from .wikipedia_tool import WikipediaTool
 from .duckduckgo_tool import DuckDuckGoTool
@@ -16,6 +18,13 @@ def run_tool_assisted_query(prompt: str, enable_thinking: bool = True):
     Returns:
         Final response content
     """
+    # Configure logging
+    logging.basicConfig(
+        filename='tool_assisted_query.log',
+        level=logging.INFO,
+        format='%(asctime)s - %(message)s'
+    )
+    
     # Define LLM configuration (Ollama endpoint)
     llm_cfg = {
         'type': 'custom',  # Explicitly specify custom endpoint
@@ -62,7 +71,12 @@ def run_tool_assisted_query(prompt: str, enable_thinking: bool = True):
     else:
         final_response = "No response generated"
     
-    return final_response
+    # Log the full response
+    logging.info(f"Full response with reasoning:\n{final_response}")
+    
+    # Remove thinking blocks
+    cleaned_response = re.sub(r'<think>.*?</think>', '', final_response, flags=re.DOTALL)
+    return cleaned_response
 
 def main():
     # Get config from environment variables
