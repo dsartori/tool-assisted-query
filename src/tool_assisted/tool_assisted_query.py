@@ -1,9 +1,9 @@
 import os
 import json
 from qwen_agent.agents import Assistant
-from wikipedia_tool import WikipediaTool
-from duckduckgo_tool import DuckDuckGoTool
-from microsoft_docs_tool import MicrosoftDocsTool
+from .wikipedia_tool import WikipediaTool
+from .duckduckgo_tool import DuckDuckGoTool
+from .microsoft_docs_tool import MicrosoftDocsTool
 
 def run_tool_assisted_query(prompt: str, enable_thinking: bool = True):
     """
@@ -64,7 +64,7 @@ def run_tool_assisted_query(prompt: str, enable_thinking: bool = True):
     
     return final_response
 
-if __name__ == "__main__":
+def main():
     # Get config from environment variables
     user_prompt = os.getenv("USER_PROMPT", "Hello, how are you?")
     enable_thinking = os.getenv("ENABLE_THINKING", "true").lower() == "true"
@@ -72,3 +72,6 @@ if __name__ == "__main__":
     # Run the query
     response = run_tool_assisted_query(user_prompt, enable_thinking)
     print(response)
+
+if __name__ == "__main__":
+    main()
